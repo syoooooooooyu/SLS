@@ -6,13 +6,12 @@ namespace syouyu\SLS\subplugins\JoinMessage;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\lang\Translatable;
-use pocketmine\utils\TextFormat;
+use pocketmine\utils\TextFormat as TF;
 
 class JoinMessageEventListener implements Listener{
 
 	public function onJoin(PlayerJoinEvent $event){
 		$player = $event->getPlayer();
-		$event->setJoinMessage(TextFormat::YELLOW.TextFormat::BOLD."JOIN>>".TextFormat::RESET.$player->getName()."様が入室しました！");
+		$event->setJoinMessage(TF::YELLOW.TF::BOLD."JOIN>>".TF::RESET.$player->getName()."様が入室しました！");
 	}
 }
