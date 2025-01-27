@@ -1,0 +1,8 @@
+name: SLS
+main: syouyu\SLS\Main
+src-namespace-prefix: syouyu
+version: 1.0.0-a
+authors:
+  - syouyu
+api: [5.0.0]
+load: STARTUP
