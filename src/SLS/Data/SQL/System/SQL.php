@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-namespace syouyu\SLS\Data\SQL;
-
-use SQLite3;
-use syouyu\SLS\resources\ResourceManager;
+namespace syouyu\SLS\Data\SQL\System;
 
 abstract class SQL{
 
@@ -18,14 +15,15 @@ abstract class SQL{
 	private PrimaryKeyColumn $keyColumn;
 	/** @var ColumnData[] */
 	private array $columns;
-
 	protected string $version;
+	protected \SQLite3 $sql;
 
 	public function __construct(PrimaryKeyColumn $keyColumn, ColumnData ...$columns){
 		$this->keyColumn = $keyColumn;
 		$this->columns = $columns;
 	}
 
+	abstract protected function getSQL(): \SQLite3;
 	abstract public function getName() : string;
 	abstract public function getVersion(): string;
 }
