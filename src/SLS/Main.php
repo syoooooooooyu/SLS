@@ -7,6 +7,7 @@ namespace syouyu\SLS;
 use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginManager;
 use syouyu\SLS\resources\ResourceManager;
+use syouyu\SLS\SQL\SQLManager;
 use syouyu\SLS\subplugins\SubPluginInitializer;
 
 class Main extends PluginBase{
@@ -14,6 +15,7 @@ class Main extends PluginBase{
 	public function onEnable() : void{
 		// PRIORITY HIGH
 		new ResourceManager($this);
+		new SQLManager($this->getDataFolder());
 
 		// PRIORITY LOW
 		SubpluginInitializer::init($this);

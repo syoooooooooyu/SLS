@@ -16,7 +16,7 @@ class ResourceManager{
 		static $resourcePath = [
 			// Write down
 		];
-		foreach($resourcePath as $path => $name){
+		foreach($resourcePath as $name => $path){
 			$resource = $plugin->getResourcePath($path);
 			self::$resources[$name] = $resource;
 		}
