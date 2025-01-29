@@ -3,14 +3,15 @@
 namespace syouyu\SLS\Data\SQL;
 
 use syouyu\SLS\Data\SQL\System\ColumnData;
-use syouyu\SLS\Data\SQL\System\PrimaryKeyColumn;
+use syouyu\SLS\Data\SQL\System\IdColumn;
 use syouyu\SLS\Data\SQL\System\SQL;
+use syouyu\SLS\Data\SQL\System\TextColumn;
 
 class PlayerDataSQL extends SQL{
 
 	public function __construct(string $configPath){
 		parent::__construct(
-			PrimaryKeyColumn::getPrimaryKeyColumn(self::SQL_INT, "id", null,true),
+			IdColumn::getPrimaryKeyColumn(self::SQL_INT, "id", null,true),
 			ColumnData::getColumnData(self::SQL_TEXT, "xuid"),
 			ColumnData::getColumnData(self::SQL_TEXT, "ip"),
 		);
@@ -21,22 +22,39 @@ class PlayerDataSQL extends SQL{
 		$this->sql->exec("CREATE TABLE IF NOT EXISTS ".$this->getName()."(
 			INTEGER id PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			TEXT xuid NOT NULL,
-			TEXT ip NOT NULL"
+			TEXT ip NOT NULL,
+			TEXT pName NOT NULL"
 		);
+	}
+
+	public function setData(PlayerData $playerData){
+
 	}
 
 	public function getDataFromId(int $id) : ?PlayerData{
 		$sql = $this->getSQL();
 		$prepare = $sql->prepare("SELECT * FROM ".$this->getName()." WHERE id = :id");
 		$prepare->bindValue(":id", $id);
-		$res = $prepare->execute();
+		return $this->sql($prepare);
+	}
+
+	public function getDataFromXuid(int $xuid) : ?PlayerData{
+		$sql = $this->getSQL();
+		$prepare = $sql->prepare("SELECT * FROM ".$this->getName()." WHERE xuid = :xuid");
+		$prepare->bindValue(":xuid", $xuid);
+		return $this->sql($prepare);
+	}
+
+	private function sql(\SQLite3Stmt $sql) : ?PlayerData{
+		$res = $sql->execute();
 		if($res === false) return null;
 		$row = $res->fetchArray();
 		if($row === false) return null;
 		return new PlayerData(
-			PrimaryKeyColumn::getPrimaryKeyColumn(self::SQL_INT, "id", $row["id"],true),
-			ColumnData::getColumnData(self::SQL_TEXT, "xuid", $row["xuid"]),
-			ColumnData::getColumnData(self::SQL_TEXT, "ip", $row["ip"]),
+			new IdColumn($row["id"]),
+			new TextColumn("xuid", $row["xuid"]),
+			new TextColumn("ip", $row["ip"]),
+			new TextColumn("pName", $row["pName"])
 		);
 	}
 

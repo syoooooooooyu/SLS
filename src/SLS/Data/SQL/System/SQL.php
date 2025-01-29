@@ -12,13 +12,13 @@ abstract class SQL{
 	const SQL_TEXT = 4;
 	const SQL_BLOB = 5;
 
-	private PrimaryKeyColumn $keyColumn;
+	private IdColumn $keyColumn;
 	/** @var ColumnData[] */
 	private array $columns;
 	protected string $version;
 	protected \SQLite3 $sql;
 
-	public function __construct(PrimaryKeyColumn $keyColumn, ColumnData ...$columns){
+	public function __construct(IdColumn $keyColumn, ColumnData ...$columns){
 		$this->keyColumn = $keyColumn;
 		$this->columns = $columns;
 	}
