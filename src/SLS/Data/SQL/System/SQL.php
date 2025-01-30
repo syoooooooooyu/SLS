@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace syouyu\SLS\Data\SQL\System;
 
+use SQLite3;
+use syouyu\SLS\Data\SQL\PlayerData;
+
 abstract class SQL{
 
 	const SQL_NULL = 1;
@@ -16,14 +19,19 @@ abstract class SQL{
 	/** @var ColumnData[] */
 	private array $columns;
 	protected string $version;
-	protected \SQLite3 $sql;
 
-	public function __construct(IdColumn $keyColumn, ColumnData ...$columns){
+	public function __construct(protected SQLite3 $sql, IdColumn $keyColumn, ColumnData ...$columns){
 		$this->keyColumn = $keyColumn;
 		$this->columns = $columns;
 	}
 
-	abstract protected function getSQL(): \SQLite3;
+	protected function getSQL(): \SQLite3{
+		return $this->sql;
+	}
+
+	abstract public function setData(PlayerData $playerData): bool;
+	abstract public function updateData(PlayerData $playerData): bool;
+	abstract public function getData(int $id): ?PlayerData;
 	abstract public function getName() : string;
 	abstract public function getVersion(): string;
 }

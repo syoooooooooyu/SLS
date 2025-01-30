@@ -9,11 +9,6 @@ use syouyu\SLS\Data\SQL\System\SQL;
 
 class SQLManager{
 
-	/**
-	 * @var SQL[]
-	 */
-	private static array $sql;
-
 	private PlayerDataSQL $playerDataSQL;
 
 	public function __construct(string $configPath){

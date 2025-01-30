@@ -25,7 +25,7 @@ class PlayerData{
 		$this->playerName = $playerName;
 	}
 
-	public function getPrimaryKey() : int{
+	public function getPrimaryKey() : ?int{
 		return $this->primaryKey->getInt();
 	}
 
@@ -33,11 +33,23 @@ class PlayerData{
 		return $this->xuid->getText();
 	}
 
+	public function setXuid(string $xuid) : void{
+		$this->xuid->value = $xuid;
+	}
+
 	public function getIp() : string{
 		return $this->ip->getText();
 	}
 
+	public function setIp(string $ip) : void{
+		$this->ip->value = $ip;
+	}
+
 	public function getPlayerName() : string{
 		return $this->playerName->getText();
+	}
+
+	public function setPlayerName(string $playerName) : void{
+		$this->playerName->value = $playerName;
 	}
 }

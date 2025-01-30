@@ -6,7 +6,7 @@ namespace syouyu\SLS\Data\SQL\System;
 
 abstract class ColumnData{
 
-	public function __construct(protected int $type, protected string $name, protected mixed $value = null){
+	public function __construct(public int $type, public string $name, public mixed $value = null){
 		//NOOP
 	}
 

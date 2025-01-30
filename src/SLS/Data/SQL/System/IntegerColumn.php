@@ -8,7 +8,7 @@ class IntegerColumn extends ColumnData{
 		parent::__construct(SQL::SQL_INT, $name, $value);
 	}
 
-	public function getInt(): int{
+	public function getInt(): ?int{
 		return parent::getValue();
 	}
 }
