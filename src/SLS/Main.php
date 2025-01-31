@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace syouyu\SLS;
 
 use pocketmine\plugin\PluginBase;
+use syouyu\SLS\Data\SQL\PlayerDataSQL;
 use syouyu\SLS\Data\SQLManager;
 use syouyu\SLS\resources\ResourceManager;
 use syouyu\SLS\subplugins\SubPluginInitializer;
@@ -21,5 +22,11 @@ class Main extends PluginBase{
 
 		// PRIORITY LOW
 		SubpluginInitializer::init($this);
+	}
+
+	public function onDisable() : void{
+		foreach($this->SQLManager->getAllSQL() as $sql){
+			$sql->onClose();
+		}
 	}
 }

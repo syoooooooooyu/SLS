@@ -15,22 +15,18 @@ abstract class SQL{
 	const SQL_TEXT = 4;
 	const SQL_BLOB = 5;
 
-	private IdColumn $keyColumn;
-	/** @var ColumnData[] */
-	private array $columns;
-	protected string $version;
-
-	public function __construct(protected SQLite3 $sql, IdColumn $keyColumn, ColumnData ...$columns){
-		$this->keyColumn = $keyColumn;
-		$this->columns = $columns;
+	public function __construct(private SQLite3 $sql){
 	}
 
 	protected function getSQL(): \SQLite3{
 		return $this->sql;
 	}
 
-	abstract public function setData(PlayerData $playerData): bool;
-	abstract public function updateData(PlayerData $playerData): bool;
+	public function onClose() : void{
+		$this->sql->close();
+	}
+
+	abstract public function setData(PlayerData $playerData): void;
 	abstract public function getData(int $id): ?PlayerData;
 	abstract public function getName() : string;
 	abstract public function getVersion(): string;
